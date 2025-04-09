@@ -18,6 +18,9 @@ import Parameters from '~/components/SidePanel/Parameters/Panel';
 import FilesPanel from '~/components/SidePanel/Files/Panel';
 import { Blocks, AttachmentIcon } from '~/components/svg';
 import { useHasAccess } from '~/hooks';
+import { Bot } from 'lucide-react'; // or any other icon that MCS may like
+import { Panel } from '../../common/panels';
+import { usePanelContext } from '~/hooks/Panel/usePanelContext';
 
 export default function useSideNavLinks({
   hidePanel,
@@ -38,6 +41,8 @@ export default function useSideNavLinks({
   interfaceConfig: Partial<TInterfaceConfig>;
   endpointsConfig: TEndpointsConfig;
 }) {
+  const { setActivePanel } = usePanelContext();
+
   const hasAccessToPrompts = useHasAccess({
     permissionType: PermissionTypes.PROMPTS,
     permission: Permissions.USE,
@@ -130,6 +135,14 @@ export default function useSideNavLinks({
         Component: BookmarkPanel,
       });
     }
+
+    links.push({
+      title: 'MCS Assistant',
+      label: '',
+      icon: Bot,
+      id: 'mcs-assistant',
+      Component: PanelSwitch,
+    });
 
     links.push({
       title: 'com_sidepanel_hide_panel',

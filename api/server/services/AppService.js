@@ -1,3 +1,5 @@
+const path = require('path');
+
 const {
   FileSources,
   EModelEndpoint,
@@ -21,6 +23,7 @@ const { initializeRoles } = require('~/models/Role');
 const { isEnabled } = require('~/server/utils');
 const { getMCPManager } = require('~/config');
 const paths = require('~/config/paths');
+paths.dist = path.resolve(__dirname, '../../../client/dist');
 
 /**
  *

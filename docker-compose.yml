@@ -9,7 +9,8 @@ services:
     depends_on:
       - mongodb
       - rag_api
-    image: ghcr.io/danny-avila/librechat-dev:latest
+    build:
+      context: .
     restart: always
     user: "${UID}:${GID}"
     extra_hosts:
@@ -27,6 +28,7 @@ services:
       - ./images:/app/client/public/images
       - ./uploads:/app/uploads
       - ./logs:/app/api/logs
+      - ./client/dist:/app/client/dist
   mongodb:
     container_name: chat-mongodb
     image: mongo

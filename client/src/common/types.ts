@@ -132,10 +132,10 @@ export interface NavProps {
 
 export interface DataColumnMeta {
   meta:
-    | {
-        size: number | string;
-      }
-    | undefined;
+  | {
+    size: number | string;
+  }
+  | undefined;
 }
 
 export enum Panel {
@@ -143,6 +143,7 @@ export enum Panel {
   builder = 'builder',
   actions = 'actions',
   model = 'model',
+  assistant = 'assistant',
 }
 
 export type FileSetter =

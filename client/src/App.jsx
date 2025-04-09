@@ -1,3 +1,19 @@
+
+// import React from 'react';
+// import SystemPromptPreview from './components/SystemPromptPreview';
+
+// // 💡 TEMPORARY TEST EXPORT
+// // This is just for viewing our system prompts during development.
+
+// export default function App() {
+//   return (
+//     <div className="min-h-screen bg-gray-100 p-6">
+//       <SystemPromptPreview />
+//     </div>
+//   );
+// }
+
+
 import { RecoilRoot } from 'recoil';
 import { DndProvider } from 'react-dnd';
 import { RouterProvider } from 'react-router-dom';

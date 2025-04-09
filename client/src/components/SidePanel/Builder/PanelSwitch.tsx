@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { defaultAssistantsVersion } from 'librechat-data-provider';
 import type { Action, TEndpointsConfig, AssistantsEndpoint } from 'librechat-data-provider';
 import type { ActionsEndpoint } from '~/common';
@@ -10,15 +10,14 @@ import {
 import AssistantPanel from './AssistantPanel';
 import { useChatContext } from '~/Providers';
 import ActionsPanel from './ActionsPanel';
-import { Panel } from '~/common';
+import { Panel } from '~/common/panels';
+import { usePanelContext } from '~/hooks/Panel/usePanelContext';
 
 export default function PanelSwitch() {
+  const { activePanel, setActivePanel } = usePanelContext();
   const { conversation, index } = useChatContext();
-  const [activePanel, setActivePanel] = useState(Panel.builder);
-  const [action, setAction] = useState<Action | undefined>(undefined);
-  const [currentAssistantId, setCurrentAssistantId] = useState<string | undefined>(
-    conversation?.assistant_id,
-  );
+  const [action, setAction] = useMemo(() => [undefined, () => { }], []);
+  const [currentAssistantId, setCurrentAssistantId] = useMemo(() => [undefined, () => { }], []);
 
   const { data: endpointsConfig = {} as TEndpointsConfig } = useGetEndpointsQuery();
   const { data: actions = [] } = useGetActionsQuery(conversation?.endpoint as ActionsEndpoint);
@@ -39,7 +38,7 @@ export default function PanelSwitch() {
   }, [conversation?.assistant_id]);
 
   if (!conversation?.endpoint) {
-    return null;
+    return <div>No endpoint</div>;
   }
 
   const version = assistantsConfig?.version ?? defaultAssistantsVersion[conversation.endpoint];
@@ -60,7 +59,9 @@ export default function PanelSwitch() {
         version={version}
       />
     );
-  } else if (activePanel === Panel.builder) {
+  }
+
+  if (activePanel === Panel.builder || activePanel === Panel.assistant) {
     return (
       <AssistantPanel
         index={index}
@@ -78,4 +79,6 @@ export default function PanelSwitch() {
       />
     );
   }
+
+  return <div>Panel not handled</div>;
 }

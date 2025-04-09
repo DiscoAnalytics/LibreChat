@@ -54,23 +54,35 @@ export default function AgentFooter({
     <div className="mx-1 mb-1 flex w-full flex-col gap-2">
       {activePanel !== Panel.advanced && <AdvancedButton setActivePanel={setActivePanel} />}
       {user?.role === SystemRoles.ADMIN && <AdminSettings />}
-      {/* Context Button */}
+
       <div className="flex items-center justify-end gap-2">
         <DeleteButton
           agent_id={agent_id}
           setCurrentAgentId={setCurrentAgentId}
           createMutation={createMutation}
         />
+
         {(agent?.author === user?.id || user?.role === SystemRoles.ADMIN) &&
           hasAccessToShareAgents && (
-          <ShareAgent
-            agent_id={agent_id}
-            agentName={agent?.name ?? ''}
-            projectIds={agent?.projectIds ?? []}
-            isCollaborative={agent?.isCollaborative}
-          />
-        )}
+            <ShareAgent
+              agent_id={agent_id}
+              agentName={agent?.name ?? ''}
+              projectIds={agent?.projectIds ?? []}
+              isCollaborative={agent?.isCollaborative}
+            />
+          )}
+
         {agent && agent.author === user?.id && <DuplicateAgent agent_id={agent_id} />}
+
+        {/* MCS Assistant Setup Button */}
+        <button
+          onClick={() => setActivePanel(Panel.assistant)}
+          className="bg-[#006EB9] hover:bg-[#005A99] text-white font-semibold px-4 py-2 rounded text-sm transition w-full"
+          type="button"
+        >
+          Assistant Setup
+        </button>
+
         {/* Submit Button */}
         <button
           className="btn btn-primary focus:shadow-outline flex h-9 w-full items-center justify-center px-4 py-2 font-semibold text-white hover:bg-green-600 focus:border-green-500"
